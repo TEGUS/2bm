@@ -1,0 +1,17 @@
+commentaire_create:
+    path:     /comment/create
+    defaults: { _controller: CoreBundle:ApiCommentaire:create }
+    requirements:
+        _method: POST
+
+commentaire_delete:
+    path:     /comment/delete
+    defaults: { _controller: CoreBundle:ApiCommentaire:delete }
+    requirements:
+        _method: POST
+
+commentaire_update:
+    path:     /comment/update
+    defaults: { _controller: CoreBundle:ApiCommentaire:update }
+    requirements:
+        _method: PUT

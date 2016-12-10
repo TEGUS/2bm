@@ -1,0 +1,12 @@
+app_user_homepage:
+    path:     /
+    defaults: { _controller: AppUserBundle:Default:index }
+    
+    
+admin_registration:
+    path:  /register/admin
+    defaults: { _controller: AppUserBundle:RegistrationAdmin:register }
+
+client_registration:
+    path:  /register/client
+    defaults: { _controller: AppUserBundle:RegistrationClient:register }

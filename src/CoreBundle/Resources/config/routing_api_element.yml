@@ -1,0 +1,35 @@
+element_create:
+    path:     /element/create
+    defaults: { _controller: CoreBundle:ApiElement:create }
+    requirements:
+        _method: POST
+
+element_update:
+    path:     /element/update
+    defaults: { _controller: CoreBundle:ApiElement:update }
+    requirements:
+        _method: POST
+
+element_delete:
+    path:     /element/delete
+    defaults: { _controller: CoreBundle:ApiElement:delete }
+    requirements:
+        _method: POST
+
+element_share:
+    path:     /element/share
+    defaults: { _controller: CoreBundle:ApiElement:share }
+    requirements:
+        _method: POST
+
+element_visible:
+    path:     /element/visible
+    defaults: { _controller: CoreBundle:ApiElement:visible }
+    requirements:
+        _method: POST
+
+element_all:
+    path:     /elements/{idTown}
+    defaults: { _controller: CoreBundle:ApiElement:allElement }
+    requirements:
+        _method: GET

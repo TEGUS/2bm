@@ -1,0 +1,47 @@
+test_ws:
+    path:     /testWS
+    defaults: { _controller: CoreBundle:ApiClient:test }
+    requirements:
+        _method: GET
+
+client_login:
+    path:     /login
+    defaults: { _controller: CoreBundle:ApiClient:login }
+    requirements:
+        _method: POST
+
+client_register:
+    path:     /register
+    defaults: { _controller: CoreBundle:ApiClient:register }
+    requirements:
+        _method: POST
+
+client_update_username:
+    path:     /update/username
+    defaults: { _controller: CoreBundle:ApiClient:updateUsername }
+    requirements:
+        _method: POST
+
+client_update_phoneNumber:
+    path:     /update/phone
+    defaults: { _controller: CoreBundle:ApiClient:updatePhone }
+    requirements:
+        _method: POST
+
+client_update_town:
+    path:     /update/town
+    defaults: { _controller: CoreBundle:ApiClient:updateTown }
+    requirements:
+        _method: POST
+
+client_update_imageProfile:
+    path:     /update/imageProfile
+    defaults: { _controller: CoreBundle:ApiClient:updateImageProfile }
+    requirements:
+        _method: POST
+
+client_all:
+    path:     /clients
+    defaults: { _controller: CoreBundle:ApiClient:allClient }
+    requirements:
+        _method: GET

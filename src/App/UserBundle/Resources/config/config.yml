@@ -1,0 +1,37 @@
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: App\UserBundle\Entity\User
+    service:
+        user_manager: pugx_user_manager
+    registration:
+        form:
+            type: App\UserBundle\Form\RegistrationType
+
+pugx_multi_user:
+  users:
+    admin:
+        entity: 
+          class: App\UserBundle\Entity\Admin
+#          factory: 
+        registration:
+          form: 
+            type: App\UserBundle\Form\Type\RegistrationAdminFormType
+            name: fos_user_registration_form
+            validation_groups:  [Registration, Default]
+          template: AppUserBundle:Registration:admin.form.html.twig
+        profile:
+          form:
+            type: App\UserBundle\Form\Type\ProfileAdminFormType
+            name: fos_user_profile_form
+            validation_groups:  [Profile, Default] 
+    client:
+        entity: 
+          class: App\UserBundle\Entity\Client
+        registration:
+          form: 
+            type: App\UserBundle\Form\Type\RegistrationClientFormType
+          template: AppUserBundle:Registration:client.form.html.twig
+        profile:
+          form: 
+            type: App\UserBundle\Form\Type\ProfileClientFormType

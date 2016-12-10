@@ -1,0 +1,5 @@
+country_all:
+    path:     /countries
+    defaults: { _controller: CoreBundle:ApiCountry:allCountries }
+    requirements:
+        _method: GET
