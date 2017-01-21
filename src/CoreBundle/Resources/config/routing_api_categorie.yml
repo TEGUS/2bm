@@ -1,0 +1,5 @@
+categorie_all:
+    path:     /categories
+    defaults: { _controller: CoreBundle:ApiCategorie:allCategories }
+    requirements:
+        _method: GET

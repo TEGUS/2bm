@@ -73,5 +73,45 @@ class Country
     {
         return $this->name;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->towns = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
+    /**
+     * Add town
+     *
+     * @param \CoreBundle\Entity\Town $town
+     *
+     * @return Country
+     */
+    public function addTown(\CoreBundle\Entity\Town $town)
+    {
+        $this->towns[] = $town;
+
+        return $this;
+    }
+
+    /**
+     * Remove town
+     *
+     * @param \CoreBundle\Entity\Town $town
+     */
+    public function removeTown(\CoreBundle\Entity\Town $town)
+    {
+        $this->towns->removeElement($town);
+    }
+
+    /**
+     * Get towns
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTowns()
+    {
+        return $this->towns;
+    }
+}

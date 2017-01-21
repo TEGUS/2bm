@@ -31,6 +31,11 @@ fos_user_change_password:
     resource: "@CoreBundle/Resources/config/routing_api_country.yml"
     prefix:   /api/
 
+2bm_api_categorie:
+    type: rest
+    resource: "@CoreBundle/Resources/config/routing_api_categorie.yml"
+    prefix:   /api/
+
 2bm_api_client:
     type: rest
     resource: "@CoreBundle/Resources/config/routing_api_client.yml"

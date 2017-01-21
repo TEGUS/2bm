@@ -21,6 +21,7 @@ class SousCommentaire
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Expose
      */
     private $id;
 
@@ -28,6 +29,7 @@ class SousCommentaire
      * @var string
      *
      * @ORM\Column(name="text", type="text")
+     * @Expose
      */
     private $text;
 
@@ -35,6 +37,7 @@ class SousCommentaire
      * @var \DateTime
      *
      * @ORM\Column(name="dateCreation", type="datetime")
+     * @Expose
      */
     private $dateCreation;
 

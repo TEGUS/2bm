@@ -39,6 +39,15 @@ class Element
     /**
      * @var string
      *
+     * @ORM\Column(name="prix", type="integer")
+     * @Expose
+     * @Groups({"findAllElement", "view_client"})
+     */
+    private $prix;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
      * @Groups({"findAllElement", "view_client"})
@@ -80,11 +89,17 @@ class Element
 
     /**
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Categorie", inversedBy="elements", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
      * @Expose
      * @Groups({"findAllElement", "view_client"})
      */
     private $categorie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type", inversedBy="elements", cascade={"persist"})
+     * @Expose
+     * @Groups({"findAllElement", "view_client"})
+     */
+    private $type;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\Client", inversedBy="elements", cascade={"persist"})
@@ -389,5 +404,53 @@ class Element
     public function getPictures()
     {
         return $this->pictures;
+    }
+
+    /**
+     * Set prix
+     *
+     * @param integer $prix
+     *
+     * @return Element
+     */
+    public function setPrix($prix)
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * Get prix
+     *
+     * @return integer
+     */
+    public function getPrix()
+    {
+        return $this->prix;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \CoreBundle\Entity\Type $type
+     *
+     * @return Element
+     */
+    public function setType(\CoreBundle\Entity\Type $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \CoreBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

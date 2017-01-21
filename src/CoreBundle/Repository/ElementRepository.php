@@ -37,7 +37,7 @@ class ElementRepository extends EntityRepository
             SELECT e
             FROM CoreBundle:Element e
             JOIN e.utilisateur u
-            JOIN e.categorie c
+            JOIN e.type c
             JOIN u.town t
             WHERE t.id = :idTown 
             AND c.libelle = :param
@@ -59,7 +59,7 @@ class ElementRepository extends EntityRepository
             SELECT e
             FROM CoreBundle:Element e
             JOIN e.utilisateur u
-            JOIN e.categorie c
+            JOIN e.type c
             JOIN u.town t
             WHERE t.id = :idTown 
             AND c.libelle = :param
@@ -74,19 +74,19 @@ class ElementRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllElementByUser($idUser, $categorie, $limit) {
+    public function findAllElementByUser($idUser, $type, $limit) {
         $em = $this->getEntityManager();
         $query = $em->createQuery('
             SELECT e
             FROM CoreBundle:Element e
             JOIN e.utilisateur u
-            JOIN e.categorie c
+            JOIN e.type t
             WHERE u.id = :idUser 
-            AND c.libelle = :categorie
+            AND t.libelle = :type_
             Order by e.dateCreation DESC
         ')->setParameters( array (
             'idUser' => $idUser,
-            'categorie' => $categorie
+            'type_' => $type
         ));
 
         return $query

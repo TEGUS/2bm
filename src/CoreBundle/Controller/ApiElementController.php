@@ -39,9 +39,9 @@ class ApiElementController extends FOSRestController
     /**
      * @Rest\View
      */
-    public function allElementByUserAction($idUser, $categorie, $limit) {
+    public function allElementByUserAction($idUser, $type, $limit) {
         $em = $this->getDoctrine()->getManager();
-        $result = $em->getRepository("CoreBundle:Element")->findAllElementByUser($idUser, $categorie, $limit);
+        $result = $em->getRepository("CoreBundle:Element")->findAllElementByUser($idUser, $type, $limit);
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('findAllElement')));
         return json_decode($data, true);
@@ -78,14 +78,17 @@ class ApiElementController extends FOSRestController
         $req = json_decode($request->getContent(), true);
 
         $user = $em->getRepository("AppUserBundle:Client")->find($req['idUser']);
-        $categorie = $em->getRepository("CoreBundle:Categorie")->findOneBy([
-            'libelle' => $req['categorie']
+        $categorie = $em->getRepository("CoreBundle:Categorie")->find($req['categorie']);
+        $type = $em->getRepository("CoreBundle:Type")->findOneBy([
+            'libelle' => $req['type']
         ]);
 
         $element = new Element();
         $element->setCategorie($categorie);
+        $element->setType($type);
         $element->setUtilisateur($user);
         $element->setLibelle($req['libelle']);
+        $element->setPrix($req['prix']);
         $element->setDescription($req['description']);
         $element->setVisible($req['visible']);
 
@@ -114,7 +117,7 @@ class ApiElementController extends FOSRestController
 
         $idElement = urldecode($request->request->get('idElement'));
         $idUtilisateur = urldecode($request->request->get('idUser'));
-        $categorie = urldecode($request->request->get('categorie'));
+        $type = urldecode($request->request->get('type'));
         $limit = urldecode($request->request->get('limit'));
 
         $element = $em->getRepository("CoreBundle:Element")->find($idElement);
@@ -122,7 +125,7 @@ class ApiElementController extends FOSRestController
         $em->remove($element);
         $em->flush();
 
-        return $this->allElementByUserAction($idUtilisateur, $categorie, $limit);
+        return $this->allElementByUserAction($idUtilisateur, $type, $limit);
     }
 
     /**
@@ -143,9 +146,12 @@ class ApiElementController extends FOSRestController
         }
 
 //        Update Element now
+        $categorie = $em->getRepository("CoreBundle:Categorie")->find($req['categorie']);
         $element = $em->getRepository("CoreBundle:Element")->find($idElement);
+        $element->setCategorie($categorie);
         $element->setLibelle($req['libelle']);
         $element->setDescription($req['description']);
+        $element->setPrix($req['prix']);
         $element->setDateCreation(new\ DateTime);
 
         $em->merge($element);
@@ -194,7 +200,7 @@ class ApiElementController extends FOSRestController
 
         $idElement = urldecode($request->request->get('idElement'));
         $idUtilisateur = urldecode($request->request->get('idUser'));
-        $categorie = urldecode($request->request->get('categorie'));
+        $type = urldecode($request->request->get('type'));
         $limit = urldecode($request->request->get('limit'));
         $val = urldecode($request->request->get('val'));
 
@@ -205,6 +211,6 @@ class ApiElementController extends FOSRestController
         $em->merge($element);
         $em->flush();
 
-        return $this->allElementByUserAction($idUtilisateur, $categorie, $limit);
+        return $this->allElementByUserAction($idUtilisateur, $type, $limit);
     }
 }

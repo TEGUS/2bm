@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Picture
@@ -22,6 +23,7 @@ class Picture
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $id;
 
@@ -30,6 +32,7 @@ class Picture
      *
      * @ORM\Column(name="path", type="text", nullable=true)
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $path;
 
@@ -74,5 +77,28 @@ class Picture
     {
         return $this->path;
     }
-}
 
+    /**
+     * Set element
+     *
+     * @param \CoreBundle\Entity\Element $element
+     *
+     * @return Picture
+     */
+    public function setElement(\CoreBundle\Entity\Element $element = null)
+    {
+        $this->element = $element;
+
+        return $this;
+    }
+
+    /**
+     * Get element
+     *
+     * @return \CoreBundle\Entity\Element
+     */
+    public function getElement()
+    {
+        return $this->element;
+    }
+}

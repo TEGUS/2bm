@@ -35,7 +35,7 @@ element_all:
         _method: GET
 
 element_all_by_user:
-    path:     /elements/{categorie}/user/{idUser}/{limit}
+    path:     /elements/{type}/user/{idUser}/{limit}
     defaults: { _controller: CoreBundle:ApiElement:allElementByUser }
     requirements:
         _method: GET
