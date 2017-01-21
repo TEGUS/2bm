@@ -15,3 +15,9 @@ commentaire_update:
     defaults: { _controller: CoreBundle:ApiCommentaire:update }
     requirements:
         _method: PUT
+
+commentaire_by_element:
+    path:     /element/{idElement}/comments/{limit}
+    defaults: { _controller: CoreBundle:ApiCommentaire:findByElement }
+    requirements:
+        _method: GET

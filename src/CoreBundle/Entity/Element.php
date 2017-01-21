@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Element
@@ -22,6 +23,7 @@ class Element
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $id;
 
@@ -30,6 +32,7 @@ class Element
      *
      * @ORM\Column(name="libelle", type="string", length=255)
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $libelle;
 
@@ -38,7 +41,7 @@ class Element
      *
      * @ORM\Column(name="description", type="text", nullable=true)
      * @Expose
-     *
+     * @Groups({"findAllElement", "view_client"})
      */
     private $description;
 
@@ -47,6 +50,7 @@ class Element
      *
      * @ORM\Column(name="dateCreation", type="datetime")
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $dateCreation;
 
@@ -55,6 +59,7 @@ class Element
      *
      * @ORM\Column(name="partager", type="boolean")
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $partager;
 
@@ -63,6 +68,7 @@ class Element
      *
      * @ORM\Column(name="visible", type="boolean")
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $visible;
 
@@ -76,6 +82,7 @@ class Element
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Categorie", inversedBy="elements", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $categorie;
 
@@ -83,18 +90,21 @@ class Element
      * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\Client", inversedBy="elements", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Expose
+     * @Groups({"findAllElement"})
      */
     private $utilisateur;
 
     /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Commentaire", mappedBy="element", cascade={"all"})
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $commentaires;
 
     /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Picture", mappedBy="element", cascade={"all"})
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $pictures;
 

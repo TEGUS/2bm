@@ -29,7 +29,25 @@ element_visible:
         _method: POST
 
 element_all:
-    path:     /elements/{idTown}
+    path:     /elements/{idTown}/{limit}
     defaults: { _controller: CoreBundle:ApiElement:allElement }
+    requirements:
+        _method: GET
+
+element_all_by_user:
+    path:     /elements/{categorie}/user/{idUser}/{limit}
+    defaults: { _controller: CoreBundle:ApiElement:allElementByUser }
+    requirements:
+        _method: GET
+
+request_all:
+    path:     /requests/{idTown}/{limit}
+    defaults: { _controller: CoreBundle:ApiElement:allRequest }
+    requirements:
+        _method: GET
+
+offer_all:
+    path:     /offers/{idTown}/{limit}
+    defaults: { _controller: CoreBundle:ApiElement:allOffer }
     requirements:
         _method: GET

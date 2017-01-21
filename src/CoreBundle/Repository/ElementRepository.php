@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository;
 class ElementRepository extends EntityRepository
 {
 
-    public function findAllElement($idTown) {
+    public function findAllElement($idTown, $limit) {
         $em = $this->getEntityManager();
         $query = $em->createQuery('
             SELECT e
@@ -25,6 +25,72 @@ class ElementRepository extends EntityRepository
             'idTown' => $idTown
         ));
 
-        return $query->getResult();
+        return $query
+            ->setMaxResults($limit)
+            ->getResult();
+    }
+
+    public function findAllRequest($idTown, $limit) {
+        $param = "Request";
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT e
+            FROM CoreBundle:Element e
+            JOIN e.utilisateur u
+            JOIN e.categorie c
+            JOIN u.town t
+            WHERE t.id = :idTown 
+            AND c.libelle = :param
+            Order by e.dateCreation DESC
+        ')->setParameters( array (
+            'idTown' => $idTown,
+            'param' => $param
+        ));
+
+        return $query
+            ->setMaxResults($limit)
+            ->getResult();
+    }
+
+    public function findAllOffer($idTown, $limit) {
+        $param = "Offer";
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT e
+            FROM CoreBundle:Element e
+            JOIN e.utilisateur u
+            JOIN e.categorie c
+            JOIN u.town t
+            WHERE t.id = :idTown 
+            AND c.libelle = :param
+            Order by e.dateCreation DESC
+        ')->setParameters( array (
+            'idTown' => $idTown,
+            'param' => $param
+        ));
+
+        return $query
+            ->setMaxResults($limit)
+            ->getResult();
+    }
+
+    public function findAllElementByUser($idUser, $categorie, $limit) {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT e
+            FROM CoreBundle:Element e
+            JOIN e.utilisateur u
+            JOIN e.categorie c
+            WHERE u.id = :idUser 
+            AND c.libelle = :categorie
+            Order by e.dateCreation DESC
+        ')->setParameters( array (
+            'idUser' => $idUser,
+            'categorie' => $categorie
+        ));
+
+        return $query
+            ->setMaxResults($limit)
+            ->getResult();
     }
 }

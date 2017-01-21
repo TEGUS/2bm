@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Town
@@ -22,6 +23,7 @@ class Town
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     * @Groups({"view_comment", "view_client"})
      */
     private $id;
 
@@ -30,19 +32,19 @@ class Town
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Expose
+     * @Groups({"view_comment", "view_client"})
      */
     private $name;
 
     /**
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Country", inversedBy="towns", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
-     * @Expose
      */
     private $country;
 
     /**
      * @ORM\OneToMany(targetEntity="App\UserBundle\Entity\Client", mappedBy="town")
-     * @Expose
+     *
      */
     private $utilisateurs;
 

@@ -3,6 +3,7 @@
 namespace CoreBundle\Controller;
 
 use App\UserBundle\Entity\Client;
+use JMS\Serializer\SerializationContext;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,6 +26,17 @@ class ApiClientController extends FOSRestController
     /**
      * @Rest\View
      */
+    public function getCurrentClientAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository("AppUserBundle:Client")->find($id);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('view_client')));
+        return json_decode($data, true);
+    }
+
+    /**
+     * @Rest\View
+     */
     public function loginAction() {
         $request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
@@ -33,8 +45,7 @@ class ApiClientController extends FOSRestController
         $client = $em->getRepository("AppUserBundle:Client")->findBy(array(
             "telephone" => $telephone
         ));
-
-        return $client[0];
+        return $this->getCurrentClientAction($client[0]->getId());
     }
 
     /**
@@ -67,7 +78,8 @@ class ApiClientController extends FOSRestController
             "telephone" => $telephone
         ));
 
-        return $result[0];
+//        return $result[0];
+        return $this->getCurrentClientAction($result[0]->getId());
     }
 
     /**
@@ -89,7 +101,7 @@ class ApiClientController extends FOSRestController
         $em->merge($client);
         $em->flush();
 
-        return $em->getRepository("AppUserBundle:Client")->find($idUtilisateur);
+        return $this->getCurrentClientAction($idUtilisateur);
     }
 
     /**
@@ -108,7 +120,7 @@ class ApiClientController extends FOSRestController
         $em->merge($client);
         $em->flush();
 
-        return $em->getRepository("AppUserBundle:Client")->find($idUtilisateur);
+        return $this->getCurrentClientAction($idUtilisateur);
     }
 
     /**
@@ -127,7 +139,7 @@ class ApiClientController extends FOSRestController
         $em->merge($client);
         $em->flush();
 
-        return $em->getRepository("AppUserBundle:Client")->find($idUtilisateur);
+        return $this->getCurrentClientAction($idUtilisateur);
     }
 
     /**
@@ -150,7 +162,7 @@ class ApiClientController extends FOSRestController
         //$pathImage = $user->getPathImage();
         //$client->setPathImage(str_replace(" ", "+", $pathImage));
 
-        return $user;
+        return $this->getCurrentClientAction($idUtilisateur);
     }
 
     /**

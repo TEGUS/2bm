@@ -4,7 +4,10 @@ namespace CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Commentaire
@@ -22,6 +25,7 @@ class Commentaire
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     * @Groups({"view_comment", "findAllElement", "view_client"})
      */
     private $id;
 
@@ -30,6 +34,7 @@ class Commentaire
      *
      * @ORM\Column(name="text", type="text")
      * @Expose
+     * @Groups({"view_comment", "view_client"})
      */
     private $text;
 
@@ -38,6 +43,7 @@ class Commentaire
      *
      * @ORM\Column(name="dateCreation", type="datetime")
      * @Expose
+     * @Groups({"view_comment", "view_client"})
      */
     private $dateCreation;
 
@@ -45,19 +51,18 @@ class Commentaire
      * @ORM\ManyToOne(targetEntity="App\UserBundle\Entity\Client", inversedBy="commentaires", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @Expose
+     * @Groups({"view_comment"})
      */
     private $utilisateur;
 
     /**
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Element", inversedBy="commentaires", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * @Expose
      */
     private $element;
 
     /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\SousCommentaire", mappedBy="commentaire")
-     * @Expose
      */
     private $sousCommentaires;
 

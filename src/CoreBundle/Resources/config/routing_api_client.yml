@@ -4,6 +4,12 @@ test_ws:
     requirements:
         _method: GET
 
+client_current:
+    path:     /currentclient/{id}
+    defaults: { _controller: CoreBundle:ApiClient:getCurrentClient }
+    requirements:
+        _method: GET
+
 client_login:
     path:     /login
     defaults: { _controller: CoreBundle:ApiClient:login }

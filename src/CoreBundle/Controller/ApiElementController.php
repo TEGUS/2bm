@@ -11,30 +11,76 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\View\View;
+use JMS\Serializer\SerializationContext;
 
 header('Access-Control-Allow-Origin: *');
 class ApiElementController extends FOSRestController
 {
 
+    public function getCurrentClientAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository("AppUserBundle:Client")->find($id);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('view_client')));
+        return json_decode($data, true);
+    }
+
     /**
      * @Rest\View
      */
-    public function allElementAction($idTown) {
+    public function allElementAction($idTown, $limit) {
         $em = $this->getDoctrine()->getManager();
-        return $em->getRepository("CoreBundle:Element")->findAllElement($idTown);
+        $result = $em->getRepository("CoreBundle:Element")->findAllElement($idTown, $limit);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('findAllElement')));
+        return json_decode($data, true);
+    }
+
+    /**
+     * @Rest\View
+     */
+    public function allElementByUserAction($idUser, $categorie, $limit) {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository("CoreBundle:Element")->findAllElementByUser($idUser, $categorie, $limit);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('findAllElement')));
+        return json_decode($data, true);
+    }
+
+    /**
+     * @Rest\View
+     */
+    public function allRequestAction($idTown, $limit) {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository("CoreBundle:Element")->findAllRequest($idTown, $limit);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('findAllElement')));
+        return json_decode($data, true);
+    }
+
+    /**
+     * @Rest\View
+     */
+    public function allOfferAction($idTown, $limit) {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository("CoreBundle:Element")->findAllOffer($idTown, $limit);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('findAllElement')));
+        return json_decode($data, true);
     }
 
     /**
      * @Rest\View
      */
     public function createAction(Request $request) {
-        //$request = $this->get('request');
         $em = $this->getDoctrine()->getManager();
 
         $req = json_decode($request->getContent(), true);
 
         $user = $em->getRepository("AppUserBundle:Client")->find($req['idUser']);
-        $categorie = $em->getRepository("CoreBundle:Categorie")->find($req['idCategorie']);
+        $categorie = $em->getRepository("CoreBundle:Categorie")->findOneBy([
+            'libelle' => $req['categorie']
+        ]);
 
         $element = new Element();
         $element->setCategorie($categorie);
@@ -56,7 +102,7 @@ class ApiElementController extends FOSRestController
             $em->flush();
         }
 
-        return $em->getRepository("AppUserBundle:Client")->find($req['idUser']);
+        return $this->getCurrentClientAction($req['idUser']);
     }
 
     /**
@@ -68,13 +114,15 @@ class ApiElementController extends FOSRestController
 
         $idElement = urldecode($request->request->get('idElement'));
         $idUtilisateur = urldecode($request->request->get('idUser'));
+        $categorie = urldecode($request->request->get('categorie'));
+        $limit = urldecode($request->request->get('limit'));
 
         $element = $em->getRepository("CoreBundle:Element")->find($idElement);
 
         $em->remove($element);
         $em->flush();
 
-        return $em->getRepository("AppUserBundle:Client")->find($idUtilisateur);
+        return $this->allElementByUserAction($idUtilisateur, $categorie, $limit);
     }
 
     /**
@@ -113,7 +161,7 @@ class ApiElementController extends FOSRestController
             $em->flush();
         }
 
-        return $em->getRepository("AppUserBundle:Client")->find($req['idUser']);
+        return $this->getCurrentClientAction($req['idUser']);
     }
 
     /**
@@ -134,7 +182,7 @@ class ApiElementController extends FOSRestController
         $em->merge($element);
         $em->flush();
 
-        return $em->getRepository("AppUserBundle:Client")->find($idUtilisateur);
+        return $this->getCurrentClientAction($idUtilisateur);
     }
 
     /**
@@ -146,6 +194,8 @@ class ApiElementController extends FOSRestController
 
         $idElement = urldecode($request->request->get('idElement'));
         $idUtilisateur = urldecode($request->request->get('idUser'));
+        $categorie = urldecode($request->request->get('categorie'));
+        $limit = urldecode($request->request->get('limit'));
         $val = urldecode($request->request->get('val'));
 
         $element = $em->getRepository("CoreBundle:Element")->find($idElement);
@@ -155,6 +205,6 @@ class ApiElementController extends FOSRestController
         $em->merge($element);
         $em->flush();
 
-        return $em->getRepository("AppUserBundle:Client")->find($idUtilisateur);
+        return $this->allElementByUserAction($idUtilisateur, $categorie, $limit);
     }
 }

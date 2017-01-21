@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use PUGX\MultiUserBundle\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -21,6 +22,7 @@ class Client extends User
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"view_comment", "findAllElement", "view_client"})
      */
     protected $id;
 
@@ -29,6 +31,7 @@ class Client extends User
      *
      * @ORM\Column(name="pathImage", type="text", nullable=true)
      * @Expose
+     * @Groups({"view_comment", "findAllElement", "view_client"})
      */
     private $pathImage;
 
@@ -46,13 +49,11 @@ class Client extends User
 
     /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Commentaire", mappedBy="utilisateur")
-     * @Expose
      */
     private $commentaires;
 
     /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\SousCommentaire", mappedBy="utilisateur")
-     * @Expose
      */
     private $sousCommentaires;
 
@@ -60,6 +61,7 @@ class Client extends User
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Town", inversedBy="utilisateurs", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      * @Expose
+     * @Groups({"view_comment", "view_client"})
      */
     private $town;
 

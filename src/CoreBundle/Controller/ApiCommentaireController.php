@@ -3,11 +3,14 @@
 namespace CoreBundle\Controller;
 
 use CoreBundle\Entity\Commentaire;
+use CoreBundle\Entity\Element;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\Serializer;
 
 header('Access-Control-Allow-Origin: *');
 class ApiCommentaireController extends FOSRestController
@@ -32,7 +35,18 @@ class ApiCommentaireController extends FOSRestController
         $em->persist($commentaire);
         $em->flush();
 
-        return $em->getRepository("CoreBundle:Element")->find($req['idElement']);
+        return $this->findByElementAction($req['idElement'], $req['limit']);
+    }
+
+    /**
+     * @Rest\View
+     */
+    public function findByElementAction($idElement, $limit) {
+        $em = $this->getDoctrine()->getManager();
+        $result = $em->getRepository("CoreBundle:Commentaire")->findAllByElement($idElement, $limit);
+        $serializer = $this->get('serializer');
+        $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('view_comment')));
+        return json_decode($data, true);
     }
 
     /**

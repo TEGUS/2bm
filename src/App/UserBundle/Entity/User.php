@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 use FOS\UserBundle\Model\User as BaseUser;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity
@@ -22,6 +23,7 @@ abstract class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Groups({"view_comment", "findAllElement", "view_client"})
      */
     protected $id;
 
@@ -46,6 +48,7 @@ abstract class User extends BaseUser
      *
      * @ORM\Column(name="telephone", type="string", length=30, nullable=true, unique=true)
      * @Expose
+     * @Groups({"view_comment", "view_client", "findAllElement"})
      */
     private $telephone;
 

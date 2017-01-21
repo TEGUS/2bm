@@ -12,4 +12,20 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentaireRepository extends EntityRepository
 {
+    public function findAllByElement($idElement, $limit)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT c
+            FROM CoreBundle:Commentaire c
+            JOIN c.element e
+            WHERE e.id = :idElement
+            ORDER BY c.dateCreation DESC 
+        ')->setParameters(array(
+            'idElement' => $idElement
+        ));
+        return $query
+            ->setMaxResults($limit)
+            ->getResult();
+    }
 }

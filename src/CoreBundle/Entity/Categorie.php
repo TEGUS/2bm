@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Expose;
 use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Categorie
@@ -22,6 +23,7 @@ class Categorie
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $id;
 
@@ -30,6 +32,7 @@ class Categorie
      *
      * @ORM\Column(name="libelle", type="string", length=255)
      * @Expose
+     * @Groups({"findAllElement", "view_client"})
      */
     private $libelle;
 
