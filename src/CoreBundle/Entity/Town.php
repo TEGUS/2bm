@@ -39,6 +39,8 @@ class Town
     /**
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Country", inversedBy="towns", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
+     * @Expose
+     * @Groups({"view_client"})
      */
     private $country;
 

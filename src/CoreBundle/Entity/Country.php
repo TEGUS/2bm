@@ -5,6 +5,7 @@ namespace CoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Country
@@ -22,6 +23,7 @@ class Country
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
+     * @Groups({"view_client"})
      */
     private $id;
 
@@ -30,6 +32,7 @@ class Country
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Expose
+     * @Groups({"view_client"})
      */
     private $name;
 

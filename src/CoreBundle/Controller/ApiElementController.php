@@ -213,4 +213,25 @@ class ApiElementController extends FOSRestController
 
         return $this->allElementByUserAction($idUtilisateur, $type, $limit);
     }
+
+    /**
+     * @Rest\View
+     */
+    public function refreshDateAction() {
+        $request = $this->get('request');
+        $em = $this->getDoctrine()->getManager();
+
+        $idElement = urldecode($request->request->get('idElement'));
+        $idUtilisateur = urldecode($request->request->get('idUser'));
+        $type = urldecode($request->request->get('type'));
+        $limit = urldecode($request->request->get('limit'));
+
+        $element = $em->getRepository("CoreBundle:Element")->find($idElement);
+        $element->setDateCreation(new\ DateTime);
+
+        $em->merge($element);
+        $em->flush();
+
+        return $this->allElementByUserAction($idUtilisateur, $type, $limit);
+    }
 }

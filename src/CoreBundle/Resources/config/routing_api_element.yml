@@ -28,6 +28,12 @@ element_visible:
     requirements:
         _method: POST
 
+element_refresh_date:
+    path:     /element/refreshdate
+    defaults: { _controller: CoreBundle:ApiElement:refreshDate }
+    requirements:
+        _method: POST
+
 element_all:
     path:     /elements/{idTown}/{limit}
     defaults: { _controller: CoreBundle:ApiElement:allElement }
