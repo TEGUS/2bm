@@ -1,0 +1,114 @@
+{% extends "AppAdminBundle::base.html.twig" %}
+
+{% block titlePage %}
+    Dashboard
+    <small>Control panel</small>
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Dashboard</li>
+{% endblock %}
+
+{% block content %}
+    <center class="row"><img src="{{ asset('images/logo.png') }}" alt="logo 2bm"></center>
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3 id="count_users">0</h3>
+                    <p>Utilisateurs</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-person-add"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-aqua">
+                <div class="inner">
+                    <h3 id="count_offers">0</h3>
+                    <p>Offres</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-star"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3 id="count_requests">0</h3>
+                    <p>Requêtes</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-star"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-3 col-xs-6">
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3 id="count_repports">0</h3>
+                    <p>Repports</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-flag"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+
+    </div>
+    <!-- /.row (main row) -->
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            function refreshCounter() {
+                $.ajax({
+                    type: 'get',
+                    url: Routing.generate('app_admin_counter'),
+                    beforeSend: function () {
+                        $("#count_users").html('<img src="{{ asset('images/loading.gif') }}">');
+                        $("#count_offers").html('<img src="{{ asset('images/loading.gif') }}">');
+                        $("#count_requests").html('<img src="{{ asset('images/loading.gif') }}">');
+                        $("#count_repports").html('<img src="{{ asset('images/loading.gif') }}">');
+                    },
+                    success: function (data) {
+                        var result = data.response;
+                        console.log(result);
+                        $("#count_users").html(result.count_users);
+                        $("#count_offers").html(result.count_offers);
+                        $("#count_requests").html(result.count_requests);
+                        $("#count_repports").html(result.count_repports);
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+            }
+
+            setInterval(function () {
+                refreshCounter();
+            }, 20000);
+
+        });
+    </script>
+{% endblock %}

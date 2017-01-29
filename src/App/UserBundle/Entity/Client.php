@@ -22,7 +22,7 @@ class Client extends User
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"view_comment", "findAllElement", "view_client"})
+     * @Groups({"view_comment", "findAllElement", "findAllRepports", "view_client"})
      */
     protected $id;
 
@@ -31,7 +31,7 @@ class Client extends User
      *
      * @ORM\Column(name="pathImage", type="text", nullable=true)
      * @Expose
-     * @Groups({"view_comment", "findAllElement", "view_client"})
+     * @Groups({"view_comment", "findAllElement", "findAllRepports", "view_client"})
      */
     private $pathImage;
 
@@ -61,9 +61,15 @@ class Client extends User
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Town", inversedBy="utilisateurs", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true)
      * @Expose
-     * @Groups({"view_comment", "view_client"})
+     * @Groups({"view_comment", "view_client", "findAllElement"})
      */
     private $town;
+
+    /**
+     * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Repport", mappedBy="utilisateur")
+     * @Expose
+     */
+    private $repports;
 
 
 
@@ -255,5 +261,39 @@ class Client extends User
     public function getTown()
     {
         return $this->town;
+    }
+
+    /**
+     * Add repport
+     *
+     * @param \CoreBundle\Entity\Repport $repport
+     *
+     * @return Client
+     */
+    public function addRepport(\CoreBundle\Entity\Repport $repport)
+    {
+        $this->repports[] = $repport;
+
+        return $this;
+    }
+
+    /**
+     * Remove repport
+     *
+     * @param \CoreBundle\Entity\Repport $repport
+     */
+    public function removeRepport(\CoreBundle\Entity\Repport $repport)
+    {
+        $this->repports->removeElement($repport);
+    }
+
+    /**
+     * Get repports
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getRepports()
+    {
+        return $this->repports;
     }
 }

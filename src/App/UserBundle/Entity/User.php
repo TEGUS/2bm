@@ -23,7 +23,7 @@ abstract class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Groups({"view_comment", "findAllElement", "view_client"})
+     * @Groups({"view_comment", "findAllElement", "findAllRepports", "view_client"})
      */
     protected $id;
 

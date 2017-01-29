@@ -1,0 +1,5 @@
+towns_all:
+    path:     /{idCountry}/towns
+    defaults: { _controller: CoreBundle:ApiTown:allTowns }
+    requirements:
+        _method: GET

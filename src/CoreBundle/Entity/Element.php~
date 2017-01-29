@@ -89,7 +89,6 @@ class Element
 
     /**
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Categorie", inversedBy="elements", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
      * @Expose
      * @Groups({"findAllElement", "view_client"})
      */
@@ -97,7 +96,6 @@ class Element
 
     /**
      * @ORM\ManyToOne(targetEntity="CoreBundle\Entity\Type", inversedBy="elements", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
      * @Expose
      * @Groups({"findAllElement", "view_client"})
      */
@@ -430,5 +428,29 @@ class Element
     public function getPrix()
     {
         return $this->prix;
+    }
+
+    /**
+     * Set type
+     *
+     * @param \CoreBundle\Entity\Type $type
+     *
+     * @return Element
+     */
+    public function setType(\CoreBundle\Entity\Type $type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return \CoreBundle\Entity\Type
+     */
+    public function getType()
+    {
+        return $this->type;
     }
 }

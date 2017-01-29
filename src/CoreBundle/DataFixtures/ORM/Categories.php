@@ -2,7 +2,9 @@
 namespace CoreBundle\DataFixtures\ORM;
 
 use CoreBundle\Entity\Categorie;
+use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -11,7 +13,7 @@ use Doctrine\Common\Persistence\ObjectManager;
  * Date: 21/01/2017
  * Time: 12:36
  */
-class Categories implements FixtureInterface
+class Categories extends AbstractFixture implements OrderedFixtureInterface
 {
 
     public function load(ObjectManager $manager)
@@ -30,5 +32,10 @@ class Categories implements FixtureInterface
             $manager->persist($list_categories[$i]);
         }
         $manager->flush();
+    }
+
+    public function getOrder()
+    {
+        return 2;
     }
 }

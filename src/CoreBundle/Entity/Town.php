@@ -23,7 +23,7 @@ class Town
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Expose
-     * @Groups({"view_comment", "view_client"})
+     * @Groups({"view_comment", "view_client", "findAllTowns", "findAllElement"})
      */
     private $id;
 
@@ -32,7 +32,7 @@ class Town
      *
      * @ORM\Column(name="name", type="string", length=255)
      * @Expose
-     * @Groups({"view_comment", "view_client"})
+     * @Groups({"view_comment", "view_client", "findAllTowns", "findAllElement"})
      */
     private $name;
 

@@ -1,0 +1,50 @@
+{% extends "AppAdminBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+{% endblock %}
+
+{% block titlePage %}
+    Repports
+{% endblock %}
+
+{% block breadcrumb %}
+    <li class="active">Reports</li>
+{% endblock %}
+
+{% block content %}
+    <div class="container" ng-controller="RepportController">
+        <div class="row">
+            <div class="col-md-4 panel panel-success">
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked" ng-repeat="r in repports">
+                        <li class="btn btn-default" data-ng-click="showContent(r)" ng-class="{'btn-success': r == repport}">
+                            <div class="row">
+                                <div class="col-md-6">{[{ r.utilisateur.username }]}</div>
+                                <div class="col-md-6">{[{ r.date_creation | date : 'dd-MM-yyyy HH:mm:ss' : 'fr' }]}</div>
+                            </div>
+                            <div class="row">{[{ r.content | limitTo : 40 }]}...</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-8 panel panel-default" data-ng-show="repport !== null">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <center>
+                                <img src="{[{ repport.utilisateur.path_image }]}" class="img-circle"
+                                     alt="User Image" style="height: 50%; width: 50%;">
+                                <h3>{[{ repport.utilisateur.username }]}</h3>
+                                <p>{[{ repport.date_creation | date : 'dd-MM-yyyy HH:mm:ss' }]}</p>
+                            </center>
+                        </div>
+                        <div class="col-md-9" style="text-align: justify;">
+                            <p>{[{ repport.content }]}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

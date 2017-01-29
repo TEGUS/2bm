@@ -1,0 +1,16 @@
+
+#ADMIN_HOMEPAGE
+app_admin_homepage:
+    path:     /
+    defaults: { _controller: AppAdminBundle:Acceuil:index }
+
+app_admin_counter:
+    path:     /stats
+    defaults: { _controller: AppAdminBundle:Acceuil:counter }
+    options:
+        expose: true
+
+#ADMIN_REPPORT
+app_admin_repport:
+    path:     /repports
+    defaults: { _controller: AppAdminBundle:Repport:index }

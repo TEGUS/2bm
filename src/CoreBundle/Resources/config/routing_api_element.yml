@@ -35,7 +35,7 @@ element_refresh_date:
         _method: POST
 
 element_all:
-    path:     /elements/{idTown}/{limit}
+    path:     /category/{idCat}/town/{idTown}/elements/{limit}
     defaults: { _controller: CoreBundle:ApiElement:allElement }
     requirements:
         _method: GET

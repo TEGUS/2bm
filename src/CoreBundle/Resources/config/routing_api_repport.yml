@@ -1,0 +1,13 @@
+repport_create:
+    path:     /repport/create
+    defaults: { _controller: CoreBundle:ApiRepport:create }
+    requirements:
+        _method: POST
+
+repport_all:
+    path:     /repports
+    defaults: { _controller: CoreBundle:ApiRepport:findAllRepports }
+    options:
+        expose: true
+    requirements:
+        _method: GET

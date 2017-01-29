@@ -13,24 +13,63 @@ use Doctrine\ORM\EntityRepository;
 class ElementRepository extends EntityRepository
 {
 
-    public function findAllElement($idTown, $limit) {
+    public function findAllElement($idCat, $idTown, $limit)
+    {
         $em = $this->getEntityManager();
-        $query = $em->createQuery('
-            SELECT e
-            FROM CoreBundle:Element e
-            JOIN e.utilisateur u
-            JOIN u.town t
-            WHERE t.id = :idTown Order by e.dateCreation DESC
-        ')->setParameters( array (
-            'idTown' => $idTown
-        ));
+
+        if ($idCat != 0 && $idTown != 0) {
+            $query = $em->createQuery('
+                SELECT e
+                FROM CoreBundle:Element e
+                JOIN e.utilisateur u
+                JOIN e.categorie cat
+                JOIN u.town t
+                WHERE t.id = :idTown 
+                AND cat.id =:idCat
+                Order by e.dateCreation DESC
+            ')->setParameters(array(
+                'idTown' => $idTown,
+                'idCat' => $idCat
+            ));
+        } else if ($idCat == 0 && $idTown != 0) {
+            $query = $em->createQuery('
+                SELECT e
+                FROM CoreBundle:Element e
+                JOIN e.utilisateur u
+                JOIN e.categorie cat
+                JOIN u.town t
+                WHERE t.id = :idTown
+                Order by e.dateCreation DESC
+            ')->setParameters(array(
+                'idTown' => $idTown
+            ));
+        } else if ($idCat != 0 && $idTown == 0) {
+            $query = $em->createQuery('
+                SELECT e
+                FROM CoreBundle:Element e
+                JOIN e.utilisateur u
+                JOIN e.categorie cat
+                JOIN u.town t
+                WHERE cat.id =:idCat
+                Order by e.dateCreation DESC
+            ')->setParameters(array(
+                'idCat' => $idCat
+            ));
+        } else if ($idCat == 0 && $idTown == 0) {
+            $query = $em->createQuery('
+                SELECT e
+                FROM CoreBundle:Element e
+                Order by e.dateCreation DESC
+            ');
+        }
 
         return $query
             ->setMaxResults($limit)
             ->getResult();
     }
 
-    public function findAllRequest($idTown, $limit) {
+    public function findAllRequest($idTown, $limit)
+    {
         $param = "Request";
         $em = $this->getEntityManager();
         $query = $em->createQuery('
@@ -42,7 +81,7 @@ class ElementRepository extends EntityRepository
             WHERE t.id = :idTown 
             AND c.libelle = :param
             Order by e.dateCreation DESC
-        ')->setParameters( array (
+        ')->setParameters(array(
             'idTown' => $idTown,
             'param' => $param
         ));
@@ -52,7 +91,8 @@ class ElementRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllOffer($idTown, $limit) {
+    public function findAllOffer($idTown, $limit)
+    {
         $param = "Offer";
         $em = $this->getEntityManager();
         $query = $em->createQuery('
@@ -64,7 +104,7 @@ class ElementRepository extends EntityRepository
             WHERE t.id = :idTown 
             AND c.libelle = :param
             Order by e.dateCreation DESC
-        ')->setParameters( array (
+        ')->setParameters(array(
             'idTown' => $idTown,
             'param' => $param
         ));
@@ -74,7 +114,8 @@ class ElementRepository extends EntityRepository
             ->getResult();
     }
 
-    public function findAllElementByUser($idUser, $type, $limit) {
+    public function findAllElementByUser($idUser, $type, $limit)
+    {
         $em = $this->getEntityManager();
         $query = $em->createQuery('
             SELECT e
@@ -84,13 +125,29 @@ class ElementRepository extends EntityRepository
             WHERE u.id = :idUser 
             AND t.libelle = :type_
             Order by e.dateCreation DESC
-        ')->setParameters( array (
+        ')->setParameters(array(
             'idUser' => $idUser,
             'type_' => $type
         ));
 
         return $query
             ->setMaxResults($limit)
+            ->getResult();
+    }
+
+    public function findRequestsOrOffers($param){
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('
+            SELECT e
+            FROM CoreBundle:Element e
+            JOIN e.utilisateur u
+            JOIN e.type c
+            WHERE c.libelle = :param
+        ')->setParameters(array(
+            'param' => $param
+        ));
+
+        return $query
             ->getResult();
     }
 }

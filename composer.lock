@@ -929,7 +929,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/90628acfec2dcd105f47ab6eddcf14d28f60962b",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSUserBundle/zipball/6b8828bcc64d0861b3918e1551947112d58e4d0c",
                 "reference": "3015f0965b74704362f9b2006646781d4613bcdd",
                 "shasum": ""
             },

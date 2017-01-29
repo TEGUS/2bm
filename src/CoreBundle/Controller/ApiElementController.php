@@ -28,9 +28,9 @@ class ApiElementController extends FOSRestController
     /**
      * @Rest\View
      */
-    public function allElementAction($idTown, $limit) {
+    public function allElementAction($idCat, $idTown, $limit) {
         $em = $this->getDoctrine()->getManager();
-        $result = $em->getRepository("CoreBundle:Element")->findAllElement($idTown, $limit);
+        $result = $em->getRepository("CoreBundle:Element")->findAllElement($idCat, $idTown, $limit);
         $serializer = $this->get('serializer');
         $data = $serializer->serialize($result, 'json', SerializationContext::create()->setGroups(array('findAllElement')));
         return json_decode($data, true);
