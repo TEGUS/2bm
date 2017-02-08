@@ -1,6 +1,7 @@
 angular.module('app', [])
     .controller('RepportController', function ($scope, $http) {
         $scope.repport = null;
+
         var refresh = function () {
             $http.get(Routing.generate('repport_all')).success(function (res) {
                 $scope.repports = res;
@@ -10,6 +11,10 @@ angular.module('app', [])
 
         $scope.showContent = function (repport) {
             $scope.repport = repport;
+        };
+
+        $scope.refreshRepport = function () {
+            refresh();
         };
     })
     .config(function ($interpolateProvider) {
