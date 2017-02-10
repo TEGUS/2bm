@@ -8,6 +8,8 @@ use Composer\Autoload\ClassLoader;
  */
 $loader = require __DIR__.'/../vendor/autoload.php';
 
+$loader->add('CoreSphere', __DIR__.'/../vendor');
+
 AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 
 return $loader;

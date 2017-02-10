@@ -39,7 +39,7 @@ class Repport
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateCreation", type="datetime", nullable=true)
+     * @ORM\Column(name="dateCreation", type="datetime")
      * @Expose
      * @Groups({"findAllRepports"})
      */
@@ -53,6 +53,13 @@ class Repport
      */
     private $utilisateur;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->dateCreation = new \DateTime();
+    }
 
     /**
      * Get id
@@ -110,5 +117,29 @@ class Repport
     public function getUtilisateur()
     {
         return $this->utilisateur;
+    }
+
+    /**
+     * Set dateCreation
+     *
+     * @param \DateTime $dateCreation
+     *
+     * @return Repport
+     */
+    public function setDateCreation($dateCreation)
+    {
+        $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * Get dateCreation
+     *
+     * @return \DateTime
+     */
+    public function getDateCreation()
+    {
+        return $this->dateCreation;
     }
 }

@@ -1,4 +1,6 @@
-
+console:
+    resource: "@CoreSphereConsoleBundle/Resources/config/routing.yml"
+    
 #ADMIN_HOMEPAGE
 app_admin_homepage:
     path:     /
