@@ -32,6 +32,10 @@ fos_user_change_password:
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
+console:
+    resource: "@CoreSphereConsoleBundle/Resources/config/routing.yml"
+    prefix: /dev
+
 #APIs
 2bm_api_country:
     type: rest
