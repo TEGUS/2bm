@@ -1,0 +1,116 @@
+{% extends "AppAdminBundle::base.html.twig" %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/datatables/dataTables.bootstrap.css') }}">
+{% endblock %}
+
+{% block titlePage %}
+    Countries
+{% endblock %}
+
+{% block breadcrumb %}
+    <li>Countries & Towns</li>
+    <li class="active">Countries</li>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-default">
+                <div class="box-header">
+                    <h3 class="box-title">New Country</h3>
+                </div>
+                <div class="box-body">
+                    <form action="{{ path('app_admin_country') }}" {{ form_enctype(form) }} method="POST" autocomplete="off">
+                        {{ form_errors(form) }}
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="form-group">
+                                {{ form_label(form.name, 'Name', { 'attr' : { 'class' : 'control-label col-md-3 col-sm-3 col-xs-12'} }) }} <span class="asterisk red">*</span>
+                                {{ form_widget(form.name, { 'attr' : { 'class' : 'form-control col-md-7 col-xs-12'} }) }}
+                            </div>
+                        </div>
+
+                        <div class="col-sm-9 col-sm-offset-3" style="margin-top: 40px;">
+                            <div class="pull-right">
+                                <input type="submit" value="{{ 'Valider'|trans }}" class="btn btn-success"/>
+                            </div>
+                        </div>
+                        <span class="hidden"> {{ form_rest(form) }} </span>
+
+                    </form>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Data</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <table id="_datatable_countries" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Active</th>
+                            <th>Options</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for c in countries %}
+                            <tr>
+                                <td>{{ c.name }}</td>
+                                <td>
+                                    {% if c.active == true %}
+                                        <a class="btn btn-success" title="Désactiver"
+                                           href="{{ path('app_admin_country_ableOrEnable', {'id' : c.id, 'val' : 0}) }}">
+                                            Oui
+                                        </a>
+                                    {%else%}
+                                        <a class="btn btn-danger" title="Activer"
+                                           href="{{ path('app_admin_country_ableOrEnable', {'id' : c.id, 'val' : 1}) }}">
+                                            Non
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: center;">
+                                    <a class="btn btn-primary tooltipster-punk" title="Modifier"
+                                       href="{{ path('app_admin_country_update', {'id' : c.id}) }}">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </a>
+                                    <a class="btn btn-danger tooltipster-punk" title="Supprimer"
+                                       data-toggle="modal" data-target=".bs-{{c.id}}-modal-sm">
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                    {% include 'AppAdminBundle:Country:delete_dialog.html.twig' with { 'c': c } %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/datatables/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('assets/datatables/dataTables.bootstrap.min.js') }}"></script>
+
+    <script>
+        $(function () {
+            $("#_datatable_countries").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
+{% endblock %}

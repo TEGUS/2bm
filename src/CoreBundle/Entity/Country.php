@@ -37,6 +37,13 @@ class Country
     private $name;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
+
+    /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Town", mappedBy="country")
      * @Expose
      */
@@ -82,6 +89,7 @@ class Country
     public function __construct()
     {
         $this->towns = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->active = false;
     }
 
     /**
@@ -116,5 +124,29 @@ class Country
     public function getTowns()
     {
         return $this->towns;
+    }
+
+    /**
+     * Set active
+     *
+     * @param boolean $active
+     *
+     * @return Country
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+
+        return $this;
+    }
+
+    /**
+     * Get active
+     *
+     * @return boolean
+     */
+    public function getActive()
+    {
+        return $this->active;
     }
 }

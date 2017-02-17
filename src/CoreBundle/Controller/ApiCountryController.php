@@ -19,6 +19,9 @@ class ApiCountryController extends FOSRestController
      */
     public function allCountriesAction() {
         $em = $this->getDoctrine()->getManager();
-        return $em->getRepository("CoreBundle:Country")->findAll();
+        return $em->getRepository("CoreBundle:Country")->findBy(
+            array('active' => true),
+            array('name' => 'ASC')
+        );
     }
 }

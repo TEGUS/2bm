@@ -37,6 +37,13 @@ class Country
     private $name;
 
     /**
+     * @var boolean
+     *
+     * @ORM\Column(name="active", type="boolean")
+     */
+    private $active;
+
+    /**
      * @ORM\OneToMany(targetEntity="CoreBundle\Entity\Town", mappedBy="country")
      * @Expose
      */

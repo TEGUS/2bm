@@ -16,3 +16,33 @@ app_admin_counter:
 app_admin_repport:
     path:     /repports
     defaults: { _controller: AppAdminBundle:Repport:index }
+
+#ADMIN_COUNTRY
+app_admin_country:
+    path:     /countries
+    defaults: { _controller: AppAdminBundle:Country:index }
+
+app_admin_country_delete:
+    path:     /country/delete/{id}
+    defaults: { _controller: AppAdminBundle:Country:delete }
+
+app_admin_country_update:
+    path:     /country/update/{id}
+    defaults: { _controller: AppAdminBundle:Country:update }
+
+app_admin_country_ableOrEnable:
+    path:     /country/ableOrEnable/{id}/{val}
+    defaults: { _controller: AppAdminBundle:Country:AbleOrEnable }
+
+#ADMIN_TOWN
+app_admin_town:
+    path:     /towns
+    defaults: { _controller: AppAdminBundle:Town:index }
+
+app_admin_town_delete:
+    path:     /town/delete/{id}
+    defaults: { _controller: AppAdminBundle:Town:delete }
+
+app_admin_town_update:
+    path:     /town/update/{id}
+    defaults: { _controller: AppAdminBundle:Town:update }

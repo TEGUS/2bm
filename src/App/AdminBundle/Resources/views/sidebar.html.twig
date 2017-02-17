@@ -37,6 +37,18 @@
                     </span>
                 </a>
             </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-table"></i> <span>Countries & Towns</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ path('app_admin_country') }}"><i class="fa fa-circle-o"></i> Countries</a></li>
+                    <li><a href="{{ path('app_admin_town') }}"><i class="fa fa-circle-o"></i> Towns</a></li>
+                </ul>
+            </li>
             <li>
                 <a href="{{ path('app_admin_repport') }}">
                     <i class="fa fa-flag"></i> <span>Repports</span>

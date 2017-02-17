@@ -22,6 +22,7 @@ class Countries extends AbstractFixture implements OrderedFixtureInterface
 
         $cameroun = new Country();
         $cameroun->setName('Cameroun');
+        $cameroun->setActive('true');
         $this->addReference('cameroun', $cameroun);
         $manager->persist($cameroun);
 
